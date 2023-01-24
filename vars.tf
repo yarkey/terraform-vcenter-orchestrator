@@ -1,12 +1,6 @@
 variable "vcenter_datacenter" {
 }
 
-variable "vcenter_datastore" {
-}
-
-variable "vcenter_pool" {
-}
-
 variable "templates" {
   default = null
 } 
@@ -26,6 +20,8 @@ variable "vcenter_server" {
 
 variable "virtual_machines" {
   type = map(object({
+        resource_pool	= string
+	datastore	= string
         template	= string
 	host_name       = string
         domain_name	= string

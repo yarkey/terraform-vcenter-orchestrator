@@ -30,12 +30,14 @@ data "vsphere_datacenter" "dc" {
 }
 
 data "vsphere_datastore" "datastore" {
-  name          = var.vcenter_datastore
+  for_each	= var.virtual_machines
+  name          = each.value.datastore
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
 data "vsphere_resource_pool" "pool" {
-  name          = var.vcenter_pool
+  for_each	= var.virtual_machines
+  name          = each.value.resource_pool
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
@@ -55,8 +57,9 @@ resource "vsphere_virtual_machine" "vm" {
   for_each         = var.virtual_machines
   
   name             = "${var.prefix}-${each.key}.${each.value.domain_name}"
-  resource_pool_id = data.vsphere_resource_pool.pool.id
-  datastore_id     = data.vsphere_datastore.datastore.id
+  # resource_pool_id = data.vsphere_resource_pool.pool.id
+  resource_pool_id  = data.vsphere_resource_pool.pool[each.key].id
+  datastore_id     = data.vsphere_datastore.datastore[each.key].id
 
   num_cpus         = each.value.num_cpus
   memory           = each.value.memory

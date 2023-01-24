@@ -1,43 +1,47 @@
 # Replace with your own values
 virtual_machines = {
   "vm1" = {
-    template = "Centos7-Template"
-    host_name = "vm1"
-    domain_name = "contoso.com"
+    resource_pool   = "esx01-main-pool"
+    datastore       = "esx01-ds1"
+    template        = "temp-centos7"
+    host_name       = "vm1"
+    domain_name     = "contoso.com"
     dns_server_list = ["8.8.8.8", "8.8.4.4"]
-    num_cpus = 2
-    memory = 2048
-    interfaces = [
+    num_cpus        = 2
+    memory          = 2048
+    interfaces      = [
       {
-      ipv4_address = "192.168.5.2"
-      ipv4_netmask = "24"
-      network = "External"
+      ipv4_address  = "192.168.5.1"
+      ipv4_netmask  = "24"
+      network       = "vlan2"
       },
       {
-      ipv4_address = "10.10.0.1"
-      ipv4_netmask = "24"
-      network = "Internal"
+      ipv4_address  = "10.10.0.1"
+      ipv4_netmask  = "24"
+      network       = "wan-isp1"
       }
     ]
-    gateway = "192.168.5.100"
+    gateway         = "192.168.5.100"
   }
 
 
   "vm2" = {
-    template = "Centos7-Template"
-    host_name = "vm2"
-    domain_name = "contoso.com"
+    resource_pool   = "esx02-main-pool"
+    datastore       = "esx02_ds1"
+    template        = "temp-centos7"
+    host_name       = "vm2"
+    domain_name     = "contoso.com"
     dns_server_list = ["8.8.8.8", "8.8.4.4"]
-    num_cpus = 2
-    memory = 4096
-    interfaces = [
+    num_cpus        = 2
+    memory          = 4096
+    interfaces      = [
       {
-      ipv4_address = "10.10.0.2"
-      ipv4_netmask = "24"
-      network = "Internal"
+      ipv4_address  = "10.10.0.2"
+      ipv4_netmask  = "24"
+      network       = "vlan2"
       }
     ]
-    gateway = "10.10.0.1"
+    gateway         = "192.158.5.100"
   }
 	
 }
